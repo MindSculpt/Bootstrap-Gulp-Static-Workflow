@@ -52,8 +52,9 @@ sources = {
 // refer to terminal output for full path to your project
 gulp.task('serve', ['sass'], function() {
     browserSync.init({
-        proxy: "localhost:8888",
-	    startPath: outputDir,
+        server: {
+            baseDir: outputDir
+        },
 	    browser: ["firefox"],
 	    notify: false
     });
