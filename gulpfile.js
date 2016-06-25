@@ -17,6 +17,7 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	gulpif = require('gulp-if'),
 	del = require('del'),
+	indexify = require('gulp-indexify'),
 	fileinclude = require('gulp-file-include');
 
 // browserSync vars
@@ -68,13 +69,17 @@ gulp.task('js', function() {
 		.pipe(gulp.dest(outputDir + 'assets/js'));
 });
 
-// html task updates build folder and processes includes
+// html task processes includes, indexifies them into pretty URLs, then moves them to the builds folder
 gulp.task('html', function() {
 	gulp.src(sources.html)
 	    .pipe(fileinclude({
 	      prefix: '@@',
 	      basepath: '@file'
 	    }))
+	    .pipe(indexify({
+			fileExtension: ['.php','.html'],
+			rewriteRelativeUrls: true
+		}))
 		.pipe(gulp.dest(outputDir));
 });
 
@@ -131,6 +136,6 @@ gulp.task('watch', function() {
 // default task
 gulp.task('default', ['clean'], function() {
   // Default task to run for local dev
-  gulp.start('js', 'sass', 'fonts', 'favicons','html', 'images', 'serve', 'watch');
+  gulp.start('js', 'sass', 'fonts', 'favicons', 'images', 'html', 'serve', 'watch');
 });
 

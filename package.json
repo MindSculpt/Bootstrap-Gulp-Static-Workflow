@@ -25,6 +25,7 @@
     "gulp-sass": "^2.0.4",
     "gulp-uglify": "^1.5.1",
     "gulp-util": "^3.0.6",
-    "jquery": "^2.1.4"
+    "jquery": "^2.1.4",
+    "gulp-indexify": "^0.1.1"
   }
 }
