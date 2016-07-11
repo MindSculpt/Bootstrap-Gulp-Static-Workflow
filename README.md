@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-* Requires Node.js, Gulp, Handlebars, & Sass
+* Requires Node.js, Gulp, Bootstrap, & Sass
 
 ### Install Node JS (Mac):
 
