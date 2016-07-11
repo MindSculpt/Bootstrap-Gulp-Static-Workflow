@@ -19,8 +19,9 @@
 2. Navigate to the project root in the command prompt
 3. Run `npm install` to install all of the remaining project dependencies
 4. Run `gulp` to compile the project files in the source folder to the development builds/folder and start watching the source folder for changes.
-    * To stop the gulp task hit ctrl+c in the command prompt
-5. View the project at http://localhost:3000/ + the value you set the var 'outputDir' in your gulpfile
+    * To stop the gulp task hit `ctrl+c` in the command prompt
+    
+5. [Browsersync](https://www.browsersync.io/) deploys your project at http://localhost:3000
 
 ## Project Notes
 
