@@ -6,10 +6,17 @@
  * @license MIT
  */
 
+var env, production, outputDir, sources, sassStyle, browserSync, reload; 	// reference vars
+
+production = false; 														// set true for production
+
 // gulp plugin vars
 var gulp = require('gulp'),
 	gutil = require('gulp-util'),
 	sass = require('gulp-sass'),
+	sourcemaps = require('gulp-sourcemaps'),
+	autoprefixer = require('gulp-autoprefixer'),
+	cssnano = require('cssnano'),
 	concat = require('gulp-concat'),
 	gulpif = require('gulp-if'),
 	browserSync = require('browser-sync'),
@@ -17,16 +24,19 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	gulpif = require('gulp-if'),
 	del = require('del'),
+	plumber = require('gulp-plumber'),
 	indexify = require('gulp-indexify'),
 	fileinclude = require('gulp-file-include');
 
 // browserSync vars
-var browserSync = require('browser-sync').create();
-var reload      = browserSync.reload;
+browserSync = require('browser-sync').create();
+reload      = browserSync.reload;
 
-var env, production, outputDir, sources, sassStyle; // reference vars
+// autoprefix options for sass
+autoprefixerOptions = {
+  browsers: ['last 2 versions', '> 5%', 'Firefox ESR']
+};
 
-production = false; 								// set true for production
 
 if (production) {
 	env = 'production'
@@ -36,7 +46,9 @@ if (production) {
 	sassStyle = 'expanded';
 }
 
-outputDir = 'builds/'+env+'/';						// path to the output directory
+// set the output dir based on our environment
+outputDir = 'builds/'+env+'/';
+
 
 // holds all paths needed to build the project; edit as needed
 sources = {
@@ -49,8 +61,9 @@ sources = {
 	favicons: ['source/assets/ico/**/*']
 }
 
-// browsersync configured here to use localhost 8888 as a proxy, assumes you have mamp up and running.
-// refer to terminal output for full path to your project
+
+// browsersync task : allows automatic browser refresh on file changes
+// ---------------------------------------------------------------------------------
 gulp.task('serve', ['sass'], function() {
     browserSync.init({
         server: {
@@ -61,7 +74,9 @@ gulp.task('serve', ['sass'], function() {
     });
 });
 
-// concat all js files and minify if env=production
+
+// js task : concat all js files and minify if env=production
+// ---------------------------------------------------------------------------------
 gulp.task('js', function() {
 	gulp.src(sources.js)
 		.pipe(concat('scripts.js'))
@@ -69,7 +84,9 @@ gulp.task('js', function() {
 		.pipe(gulp.dest(outputDir + 'assets/js'));
 });
 
-// html task processes includes, indexifies them into pretty URLs, then moves them to the builds folder
+
+// html task : html task processes includes, indexifies them into pretty URLs, then moves them to the builds folder
+// ---------------------------------------------------------------------------------
 gulp.task('html', function() {
 	gulp.src(sources.html)
 	    .pipe(fileinclude({
@@ -77,35 +94,51 @@ gulp.task('html', function() {
 	      basepath: '@file'
 	    }))
 	    .pipe(indexify({
-			fileExtension: ['.php','.html'],
+			fileExtension: ['.html'],
 			rewriteRelativeUrls: true
 		}))
 		.pipe(gulp.dest(outputDir));
 });
 
-// basic sass compiling task
+
+// sass task : basic sass compiling task
+// ---------------------------------------------------------------------------------
 gulp.task('sass', function() {
 	gulp.src(sources.sass)
+		.pipe(plumber(function(error) {
+			gutil.beep();
+			gutil.log(gutil.colors.red(error.message));
+			this.emit('end');
+		}))
+		.pipe(sourcemaps.init())
 		.pipe(sass({
 			outputStyle: sassStyle
 		}).on('error', sass.logError))
+		.pipe(autoprefixer(autoprefixerOptions))
+		.pipe(sourcemaps.write())
 		.pipe(gulp.dest(outputDir + 'assets/css'))
 		.pipe(browserSync.stream());
 });
 
+
 // basic fonts task, move them to build dir
+// ---------------------------------------------------------------------------------
 gulp.task('fonts', function() {
 	gulp.src(sources.fonts)
 		.pipe(gulp.dest(outputDir + 'assets/fonts'));
 });
 
-// basic favicons task, move them to build dir
+
+// favicons task : basic favicons task, move them to build dir
+// ---------------------------------------------------------------------------------
 gulp.task('favicons', function() {
 	gulp.src(sources.favicons)
 		.pipe(gulp.dest(outputDir + 'assets/ico'));
 });
 
-// optimize images and move them to build dir
+
+// images task : optimize images and move them to build dir
+// ---------------------------------------------------------------------------------
 gulp.task('images', function() {
 	gulp.src(sources.images)
 		.pipe(imageop({
@@ -116,13 +149,16 @@ gulp.task('images', function() {
 		.pipe(gulp.dest(outputDir + 'assets/images'));
 });
 
-// clean task: empties build folder for a fresh start each time the project spins up
+
+// clean task : empties build folder for a fresh start each time the project spins up
 // ---------------------------------------------------------------------------------
 gulp.task('clean', function(cb) {
     return del(['builds'], cb);
 });
 
-// watch all file types for changes
+
+// watch task : all file types for changes
+// ---------------------------------------------------------------------------------
 gulp.task('watch', function() {
 	gulp.watch(sources.js, ['js']).on('change', reload);
 	gulp.watch(sources.sass, ['sass']).on('change', reload);
@@ -132,6 +168,15 @@ gulp.task('watch', function() {
 	gulp.watch(sources.html.concat(sources.htmlIncludes), ['html']).on('change', reload);
     gulp.watch(sources.html).on('change', reload);
 });
+
+
+// build task : builds project w/o browsersync server
+// ---------------------------------------------------------------------------------
+gulp.task('build', ['clean'], function() {
+  // Default build task runs w/o browsersync or watch
+  gulp.start('js', 'sass', 'fonts', 'favicons', 'images', 'html');
+});
+
 
 // default task
 gulp.task('default', ['clean'], function() {

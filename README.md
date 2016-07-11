@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-* Requires Node.js, Gulp, & Sass
+* Requires Node.js, Gulp, Handlebars, & Sass
 
 ### Install Node JS (Mac):
 
@@ -27,5 +27,7 @@
 Development should take place in the source folder. The watch command that runs when you run `gulp` will watch changes in this folder and update the builds in the /builds folder. Any changes made to the builds folder will be overwritten by the gulp tasks.
 
 The builds folder is cleaned each time you start up a project, so before you run your `gulp` task make sure you set the 'outputDir' folder value to either 'production' (minified assets) or 'development' (unminified assets).
+
+Don't forget to add your own `.htaccess` file to your root on production.
 
 Sass is the CSS preprocessor this project uses for styles. Learn more about syntax here: [http://sass-lang.com/](http://sass-lang.com/)
