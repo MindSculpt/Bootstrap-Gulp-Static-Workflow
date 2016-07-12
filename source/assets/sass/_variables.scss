@@ -1,55 +1,380 @@
+//== Branded settings
+//
+//##
+
+
+//== Default
+//
+//##
+$white: 	#fff;
+$black: 	#000;
+
+$default-link-color: #ff9800;
+
+$amber: #ffc107;
+
+//== Global
+//
+//##
+$body-default-font-weight: 400;
+
+
+
+
+
+//== Footer
+//
+//##
+$footer-background-color: #222;
+
+
+//== Buttons
+//
+//##
+
+//== Custom colors
+$light-grey: 	#e0e0e0;
+$medium-grey: 	#bdbdbd;
+$dark-grey: 	#757575;
+$cyan: 			#4dd0e1;
+$dark-cyan: 	#00838f;
+$light-blue: 	#03a9f4;
+$light-amber:	#ffca28;
+$light-orange:	#ffa726;
+
+$blue-grey: #607d8b; // logo icon
+
+//== Custom nav button color
+$nav-call-to-action-btn-background: $light-orange;
+
+$default-btn-color: 	$white;
+$primary-btn-color: 	$white;
+$secondary-btn-color: 	$white;
+
+$default-btn-background-color: 		$light-grey;
+$primary-btn-background-color: 		$cyan;
+$secondary-btn-background-color: 	$light-blue;
+
+
+
+
+
+//== Forms
+//
+//##
+$form-input-active-label-color:     $light-amber;
+$form-input-inactive-label-color:   $medium-grey;
+
+
+
+
+
+
+//== Social icon colors
+//
+//##
+$facebook: 		#3b5998;
+$twitter: 		#00aced;
+$google-plus: 	#dd4b39;
+$youtube: 		#bb0000;
+$linkedin: 		#007bb6;
+$instagram: 	#517fa4;
+$pinterest: 	#cb2027;
+$addthis: 		#f6905c;
+
+
+
+
+
+//== Bootstrap custom overrides (not provided by Bootstrap as a variable)
+//
+//##
+
+//== Footer height custom settings, updates body and footer height
+$footer-mobile-margin: 	205px;
+$footer-desktop-margin: 76px;
+
+//== Navbar custom settings
+$navbar-link-font-size: 	14px;
+$navbar-link-font-weight: 	400;
+$navbar-border-width: 		0;
+
+//== Jumbotron custom settings
+$jumbotron-background-opacity: .15;
+
+
+//== TODO other nav settings that can be adjusted
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .active > a.btn {
+    color: $medium-grey;
+    background-color: #E7E7E7;
+}
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #555;
+    background-color: #D5D5D5;
+}
+/* caret */
+.navbar-default .navbar-nav > .dropdown > a .caret {
+    border-top-color: #777;
+    border-bottom-color: #777;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: #333;
+    border-bottom-color: #333;
+}
+.navbar-default .navbar-nav > .open > a .caret, 
+.navbar-default .navbar-nav > .open > a:hover .caret, 
+.navbar-default .navbar-nav > .open > a:focus .caret {
+    border-top-color: #555;
+    border-bottom-color: #555;
+}
+/* mobile version */
+.navbar-default .navbar-toggle {
+    border-color: #DDD;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #DDD;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #CCC;
+}
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #777;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #333;
+    }
+}
+
 // Colors, etc...
-//$brand-primary: 		$clientLightBlue;
+//$brand-primary:       #000;
 
 // Scaffolding
-$body-bg:					#fff;
-$text-color:				#666;
-$link-color:                #804c7f;
+$body-bg:                   #fff;
+$text-color:                #353535;
+$link-color:                $default-link-color;
 //$link-hover-color:      darken($link-color, 15%);
 
 //== Typography
-$font-family-sans-serif:  "Open Sans", Helvetica, Arial, sans-serif;
+$font-family-sans-serif:  "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-serif:       "Open Sans", "Times New Roman", Times, serif;
+$font-family-base:        $font-family-serif;
+
+$font-size-base:          16px;
+
+$headings-font-family:    $font-family-sans-serif;
+$headings-font-weight:    800 !default;
+
+//== Navs
+//
+//##
+
+//=== Shared nav styles
+//$nav-link-padding:                          10px 35px !default;
+$nav-link-hover-bg:                         #f5f5f5;
+
+//$nav-disabled-link-color:                   $gray-light !default;
+//$nav-disabled-link-hover-color:             $gray-light !default;
 
 //== Navbar
 
-// Basics of a navbar
-//$navbar-height:                    70px;
-$navbar-default-bg:					#222;
+// Navbar brand label
+//$navbar-default-brand-color:               $navbar-default-link-color !default;
+//$navbar-default-brand-hover-color:         darken($navbar-default-brand-color, 10%) !default;
+//$navbar-default-brand-hover-bg:            transparent !default;
 
-// Navbar links
-$navbar-default-link-color:                  #fff;
-$navbar-default-link-hover-color:            #f5f5f5;
-//$navbar-default-link-hover-bg:             transparent;
-$navbar-default-link-active-color:           #ccc;
-//$navbar-default-link-active-bg:            transparent;
+// Basics of a navbar
+$navbar-height:                    70px;
+$navbar-default-bg:                 #fff;
+
+//== Navbar links
+$navbar-default-link-color:                #777;
+$navbar-default-link-hover-color:          #999;
+$navbar-default-link-hover-bg:             #f5f5f5;
+$navbar-default-link-active-color:         $medium-grey;
+$navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%);
+$navbar-default-link-disabled-color:       #ccc;
+$navbar-default-link-disabled-bg:          transparent;
 
 //=== Inverted navbar
 // Reset inverted navbar basics
 $navbar-inverse-color:                      lighten(#999, 15%);
-$navbar-inverse-bg:                         #222 !default;
+$navbar-inverse-bg:                         #222;
 $navbar-inverse-border:                     darken($navbar-inverse-bg, 10%);
 
+// Navbar toggle
+$navbar-default-toggle-hover-bg:           #eee;
+$navbar-default-toggle-icon-bar-bg:        $light-orange;
+$navbar-default-toggle-border-color:       $light-grey;
+
+
 //== Buttons
+//
+//##
 $btn-font-weight:                700;
 
-$btn-default-color:              #999;
-$btn-default-bg:                 #fff !default;
+$btn-default-color:              $text-color;
+$btn-default-bg:                 $default-btn-background-color;
 //$btn-default-border:           #ccc !default;
 
-$btn-primary-color:              #fff !default;
-$btn-primary-bg:                 #222;
+$btn-primary-color:              $white;
+$btn-primary-bg:                 $primary-btn-background-color;
 //$btn-primary-border:           darken($btn-primary-bg, 5%) !default;
+
+$btn-secondary-color:               $white;
+$btn-secondary-bg:                  $secondary-btn-background-color;
+$btn-border-radius-base:            4px;
+$btn-border-radius-large:           0;
+
+$hr-border:                     #f5f5f5;
+
+//== Jumbotron
 //
-$btn-secondary-color:            	#fff !default;
-$btn-secondary-bg:               	#999;
-$btn-border-radius-base:         	0;
+//##
+
+$jumbotron-padding:              0;
+$jumbotron-color:                $white;
+$jumbotron-bg:                   #252525;
+//$jumbotron-heading-color:        inherit !default;
+//$jumbotron-font-size:            ceil(($font-size-base * 1.5)) !default;
+//$jumbotron-heading-font-size:    ceil(($font-size-base * 4.5)) !default;
+
+//== Thumbnails
+//
+//##
+
+//== Padding around the thumbnail image
+$thumbnail-padding:           0;
+//== Thumbnail background color
+$thumbnail-bg:                transparent;
+//== Thumbnail border color
+$thumbnail-border:            none;
+//== Thumbnail border radius
+$thumbnail-border-radius:     0;
+
+//== Custom text color for thumbnail captions
+//$thumbnail-caption-color:     $text-color !default;
+//== Padding around the thumbnail caption
+$thumbnail-caption-padding:   0;
+
+
+
+// Colors, etc...
+//$brand-primary: 		#000;
+
+// Scaffolding
+$body-bg:					#fff;
+$text-color:				#353535;
+$link-color:                $default-link-color;
+//$link-hover-color:      darken($link-color, 15%);
+
+//== Typography
+$font-family-sans-serif:  "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-serif:       "Open Sans", "Times New Roman", Times, serif;
+$font-family-base:        $font-family-serif;
+
+$font-size-base:          16px;
+
+$headings-font-family:    $font-family-sans-serif;
+$headings-font-weight:    800 !default;
+
+//== Navs
+//
+//##
+
+//=== Shared nav styles
+//$nav-link-padding:                          10px 35px !default;
+$nav-link-hover-bg:                         #f5f5f5;
+
+//$nav-disabled-link-color:                   $gray-light !default;
+//$nav-disabled-link-hover-color:             $gray-light !default;
+
+//== Navbar
+
+// Navbar brand label
+//$navbar-default-brand-color:               $navbar-default-link-color !default;
+//$navbar-default-brand-hover-color:         darken($navbar-default-brand-color, 10%) !default;
+//$navbar-default-brand-hover-bg:            transparent !default;
+
+// Basics of a navbar
+$navbar-height:                    70px;
+$navbar-default-bg:					#fff;
+
+//== Navbar links
+$navbar-default-link-color:                #777;
+$navbar-default-link-hover-color:          #999;
+$navbar-default-link-hover-bg:             #f5f5f5;
+$navbar-default-link-active-color:         $medium-grey;
+$navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%);
+$navbar-default-link-disabled-color:       #ccc;
+$navbar-default-link-disabled-bg:          transparent;
+
+//=== Inverted navbar
+// Reset inverted navbar basics
+$navbar-inverse-color:                      lighten(#999, 15%);
+$navbar-inverse-bg:                         #222;
+$navbar-inverse-border:                     darken($navbar-inverse-bg, 10%);
+
+// Navbar toggle
+$navbar-default-toggle-hover-bg:           #eee;
+$navbar-default-toggle-icon-bar-bg:        $light-orange;
+$navbar-default-toggle-border-color:       $light-grey;
+
+
+//== Buttons
+//
+//##
+$btn-font-weight:                700;
+
+$btn-default-color:              $text-color;
+$btn-default-bg:                 $default-btn-background-color;
+//$btn-default-border:           #ccc !default;
+
+$btn-primary-color:              $white;
+$btn-primary-bg:                 $primary-btn-background-color;
+//$btn-primary-border:           darken($btn-primary-bg, 5%) !default;
+
+$btn-secondary-color:            	$white;
+$btn-secondary-bg:               	$secondary-btn-background-color;
+$btn-border-radius-base:         	4px;
 $btn-border-radius-large:			0;
 
 $hr-border:						#f5f5f5;
 
-$container-width:				1440px;
+//== Jumbotron
+//
+//##
 
+$jumbotron-padding:              0;
+$jumbotron-color:                $white;
+$jumbotron-bg:                   #252525;
+//$jumbotron-heading-color:        inherit !default;
+//$jumbotron-font-size:            ceil(($font-size-base * 1.5)) !default;
+//$jumbotron-heading-font-size:    ceil(($font-size-base * 4.5)) !default;
 
-// Imports
-@import "../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
-@import "../../../node_modules/font-awesome/scss/font-awesome.scss";
+//== Thumbnails
+//
+//##
+
+//== Padding around the thumbnail image
+$thumbnail-padding:           0;
+//== Thumbnail background color
+$thumbnail-bg:                transparent;
+//== Thumbnail border color
+$thumbnail-border:            none;
+//== Thumbnail border radius
+$thumbnail-border-radius:     0;
+
+//== Custom text color for thumbnail captions
+//$thumbnail-caption-color:     $text-color !default;
+//== Padding around the thumbnail caption
+$thumbnail-caption-padding:   0;
+

@@ -1,5 +1,35 @@
-@import "brand";
+/*------------------------------------*\
+  #BOOTSTRAP 3 MEDIA QUERIES
+\*------------------------------------*/
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Small devices (tablets, 768px and up) */
+//@media (min-width: $screen-sm-min) { }
+
+/* Medium devices (desktops, 992px and up) */
+//@media (min-width: $screen-md-min) { }
+
+/* Large devices (large desktops, 1200px and up) */
+//@media (min-width: $screen-lg-min) { }
+
+
+
+
+
+/*------------------------------------*\
+  #IMPORTS
+\*------------------------------------*/
+@import "../../../node_modules/font-awesome/scss/font-awesome.scss";
+
+@import "mixins";
 @import "variables";
+
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+
+
+
 
 /*!
  * IE10 viewport hack for Surface/desktop Windows 8 bug
@@ -50,4 +80,58 @@ body > .container {
 .footer > .container {
   padding-right: 15px;
   padding-left: 15px;
+}
+
+
+
+
+/* Navbar
+-------------------------------------------------- */
+.navbar {  
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+          
+    /*css animation to change icon bar to x on open/close */
+    .navbar-toggle {
+        &:hover, &:focus {
+            background-color: transparent;  
+        }
+        &.collapsed {
+            .icon-bar {
+                background-color: #666;
+                &:nth-of-type(1) {
+                    transform: rotate(0deg);
+                    top: 0;
+                }
+                &:nth-of-type(2) {
+                    opacity: 1;
+                    width: 100%;
+                    margin-left: 0;
+                }
+                &:nth-of-type(3) {
+                    transform: rotate(0deg);
+                    bottom: 0;
+                }
+            }
+        }
+        .icon-bar {
+            position: relative;
+            transition: all .1s ease-in-out;
+            background-color: orangered;
+            
+            &:nth-of-type(1) {
+                transform: rotate(45deg);
+                top: 6px;
+            }
+            &:nth-of-type(2) {
+                opacity: 0;
+                width: 0;
+                margin-left: 50%;
+            }
+            &:nth-of-type(3) {
+                transform: rotate(-45deg);
+                bottom: 6px;
+            }
+        }
+    }/* /css animation to change icon bar to x on open/close */
 }

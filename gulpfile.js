@@ -8,7 +8,9 @@
 
 var env, production, outputDir, sources, sassStyle, browserSync, reload; 	// reference vars
 
-production = false; 														// set true for production
+// production = true	//	builds out static website for production
+// production = false	//	builds out static files for client hand-off
+production = false; 														
 
 // gulp plugin vars
 var gulp = require('gulp'),
@@ -31,6 +33,7 @@ var gulp = require('gulp'),
 // browserSync vars
 browserSync = require('browser-sync').create();
 reload      = browserSync.reload;
+
 
 // autoprefix options for sass
 autoprefixerOptions = {
@@ -72,15 +75,24 @@ gulp.task('serve', ['sass'], function() {
 	    browser: ["firefox"],
 	    notify: false
     });
+    
+    // force assets to reload
+    gulp.watch(sources.js, ['js', reload]);
+	gulp.watch(sources.sass, ['sass', reload]);
+	gulp.watch(sources.images, ['images', reload]);
+	
+	// force html files to reload via browsersync
+	gulp.watch(sources.html.concat(sources.htmlIncludes), ['html', reload]);
+    gulp.watch(sources.html, [reload]);
 });
 
 
 // js task : concat all js files and minify if env=production
 // ---------------------------------------------------------------------------------
 gulp.task('js', function() {
-	gulp.src(sources.js)
-		.pipe(concat('scripts.js'))
-		.pipe(gulpif(production, uglify()))
+	return gulp.src(sources.js)
+		.pipe( gulpif(production, concat('scripts.js')) )
+		.pipe( gulpif(production, uglify()) )
 		.pipe(gulp.dest(outputDir + 'assets/js'));
 });
 
@@ -88,15 +100,17 @@ gulp.task('js', function() {
 // html task : html task processes includes, indexifies them into pretty URLs, then moves them to the builds folder
 // ---------------------------------------------------------------------------------
 gulp.task('html', function() {
-	gulp.src(sources.html)
+	return gulp.src(sources.html)
 	    .pipe(fileinclude({
 	      prefix: '@@',
 	      basepath: '@file'
 	    }))
-	    .pipe(indexify({
-			fileExtension: ['.html'],
-			rewriteRelativeUrls: true
-		}))
+	    .pipe(gulpif(production, 
+		    indexify({
+				fileExtension: ['.html'],
+				rewriteRelativeUrls: true
+			}))
+		)
 		.pipe(gulp.dest(outputDir));
 });
 
@@ -104,7 +118,7 @@ gulp.task('html', function() {
 // sass task : basic sass compiling task
 // ---------------------------------------------------------------------------------
 gulp.task('sass', function() {
-	gulp.src(sources.sass)
+	return gulp.src(sources.sass)
 		.pipe(plumber(function(error) {
 			gutil.beep();
 			gutil.log(gutil.colors.red(error.message));
@@ -124,7 +138,7 @@ gulp.task('sass', function() {
 // basic fonts task, move them to build dir
 // ---------------------------------------------------------------------------------
 gulp.task('fonts', function() {
-	gulp.src(sources.fonts)
+	return gulp.src(sources.fonts)
 		.pipe(gulp.dest(outputDir + 'assets/fonts'));
 });
 
@@ -132,7 +146,7 @@ gulp.task('fonts', function() {
 // favicons task : basic favicons task, move them to build dir
 // ---------------------------------------------------------------------------------
 gulp.task('favicons', function() {
-	gulp.src(sources.favicons)
+	return gulp.src(sources.favicons)
 		.pipe(gulp.dest(outputDir + 'assets/ico'));
 });
 
@@ -140,7 +154,7 @@ gulp.task('favicons', function() {
 // images task : optimize images and move them to build dir
 // ---------------------------------------------------------------------------------
 gulp.task('images', function() {
-	gulp.src(sources.images)
+	return gulp.src(sources.images)
 		.pipe(imageop({
 			optimizationLevel: 5,
 			progressive: true,
@@ -152,35 +166,22 @@ gulp.task('images', function() {
 
 // clean task : empties build folder for a fresh start each time the project spins up
 // ---------------------------------------------------------------------------------
-gulp.task('clean', function(cb) {
+gulp.task('clean:builds', function(cb) {
     return del(['builds'], cb);
-});
-
-
-// watch task : all file types for changes
-// ---------------------------------------------------------------------------------
-gulp.task('watch', function() {
-	gulp.watch(sources.js, ['js']).on('change', reload);
-	gulp.watch(sources.sass, ['sass']).on('change', reload);
-	gulp.watch(sources.images, ['images']).on('change', reload);
-	
-	// force html files to reload via browsersync
-	gulp.watch(sources.html.concat(sources.htmlIncludes), ['html']).on('change', reload);
-    gulp.watch(sources.html).on('change', reload);
 });
 
 
 // build task : builds project w/o browsersync server
 // ---------------------------------------------------------------------------------
-gulp.task('build', ['clean'], function() {
+gulp.task('build', ['clean:builds'], function() {
   // Default build task runs w/o browsersync or watch
   gulp.start('js', 'sass', 'fonts', 'favicons', 'images', 'html');
 });
 
 
 // default task
-gulp.task('default', ['clean'], function() {
+gulp.task('default', ['clean:builds'], function() {
   // Default task to run for local dev
-  gulp.start('js', 'sass', 'fonts', 'favicons', 'images', 'html', 'serve', 'watch');
+  gulp.start('js', 'sass', 'fonts', 'favicons', 'images', 'html', 'serve');
 });
 

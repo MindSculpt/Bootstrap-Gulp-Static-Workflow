@@ -21,10 +21,12 @@
 4. Run `gulp` to compile the project files in the source folder to the development builds/folder and start watching the source folder for changes.
     * To stop the gulp task hit `ctrl+c` in the command prompt
     
-5. [Browsersync](https://www.browsersync.io/) deploys your project at http://localhost:3000
+5. [Browsersync](https://www.browsersync.io/) deploys your project without a local server at http://localhost:3000
 
-## Project Notes
+### Configuration
+Update, edit, add styles as needed in `source / assets / sass`. This repo makes no assumption about other dependencies (e.g. fonts, analytics, open graph tags, etc.) typically included in your template files, so you will need to customize that based on your project needs.
 
+### Project Notes
 Development should take place in the source folder. The watch command that runs when you run `gulp` will watch changes in this folder and update the builds in the /builds folder. Any changes made to the builds folder will be overwritten by the gulp tasks.
 
 The builds folder is cleaned each time you start up a project, so before you run your `gulp` task make sure you set the 'outputDir' folder value to either 'production' (minified assets) or 'development' (unminified assets).
